@@ -44,8 +44,12 @@ I believe good tools can make both teaching and development simpler.
 如果你觉得我的开源项目对你有帮助，欢迎在我在“ko-fi”或“爱发电”支持我：
 If you find my open-source projects helpful, feel free to buy me a coffee:
 
-[![Ko-fi](https://img.shields.io/badge/Ko-fi-支持我-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/flflag)
-[![爱发电](https://img.shields.io/badge/爱发电-支持我-946CE6?style=for-the-badge&logo=afdian&logoColor=white)](https://afdian.com/a/flflag)
+<a href="https://ko-fi.com/flflag">
+  <img src="https://img.shields.io/badge/Ko-fi-buy-a-coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" height="40" alt="Ko-fi">
+</a>
+<a href="https://afdian.com/a/flflag">
+  <img src="https://img.shields.io/badge/爱发电-支持我-946CE6?style=for-the-badge&logo=afdian&logoColor=white" height="40" alt="爱发电">
+</a>
 
 ---
 
