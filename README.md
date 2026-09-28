@@ -46,7 +46,7 @@ If you find my open-source projects helpful, feel free to buy me a coffee:
 
 <a href="https://ko-fi.com/flflag"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="40" alt="Buy Me a Coffee"></a>&nbsp;&nbsp;<a href="https://afdian.com/a/flflag"><img src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png" height="40" alt="爱发电"></a>
 
-
+爱发电：https://afdian.com/a/flflag
 
 *感谢你的来访，祝你今天化学方程式配平顺利。*\
 *Thanks for stopping by, and may your chemical equations always balance.*
