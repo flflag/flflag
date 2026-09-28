@@ -41,10 +41,11 @@ I believe good tools can make both teaching and development simpler.
 
 ## 💖 支持我 / Support Me
 
-如果你觉得我的开源项目对你有帮助，欢迎请我喝杯咖啡：
+如果你觉得我的开源项目对你有帮助，欢迎在我在“ko-fi”或“爱发电”支持我：
 If you find my open-source projects helpful, feel free to buy me a coffee:
 
-[![Ko-fi](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://ko-fi.com/flflag)
+[![Ko-fi](https://img.shields.io/badge/Ko-fi-支持我-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/flflag)
+[![爱发电](https://img.shields.io/badge/爱发电-支持我-946CE6?style=for-the-badge&logo=afdian&logoColor=white)](https://afdian.com/a/flflag)
 
 ---
 
