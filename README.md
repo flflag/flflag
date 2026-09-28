@@ -1,52 +1,106 @@
-## 👋 我是谁 / Who am I
+<div align="center">
 
-**高中化学教师 / 兼职开发者**
-**High School Chemistry Teacher / Hobbyist Developer**
+# Edge-CDP-remote-debugging-default-user-data
 
-白天在实验室里教化学，晚上在编辑器里写代码。\
-Teaching chemistry in the lab by day, coding in the editor by night.
+[![Release](https://img.shields.io/github/v/release/flflag/edge-cdp-remote-debugging-default-user-data?label=release&color=blue)](https://github.com/flflag/edge-cdp-remote-debugging-default-user-data/releases)
+[![Downloads](https://img.shields.io/github/downloads/flflag/edge-cdp-remote-debugging-default-user-data/total?label=downloads&color=green)](https://github.com/flflag/edge-cdp-remote-debugging-default-user-data/releases)
+[![License](https://img.shields.io/github/license/flflag/edge-cdp-remote-debugging-default-user-data?label=license&color=orange)](LICENSE)
+[![Email](https://img.shields.io/badge/email-flflag@163.com-red)](mailto:flflag@163.com)
 
-我相信好的工具能同时让教学和开发变得更简单。\
-I believe good tools can make both teaching and development simpler.
+**English** | [中文](README.zh-CN.md)
 
+</div>
 
+A Windows PowerShell tool that enables **Edge DevTools remote debugging (CDP)** on the **default user data directory**, working around the Chromium 136+ security restriction that blocks remote debugging on the default profile.
 
-## 🧪 我在做什么 / What I'm Doing
+## 🧩 The Problem
 
-- 🧑‍🏫 高中化学教师，日常和元素周期表、化学方程式打交道\
-  High school chemistry teacher, working with the periodic table and chemical equations every day.
-- 💻 业余时间开发开源工具，主要解决自己在教学和日常工作中遇到的问题\
-  Building open-source tools in my spare time, mainly to solve problems I run into in teaching and daily work.
-- 📦 目前维护 [Edge-CDP-remote-debugging-default-user-data](https://github.com/flflag/Edge-CDP-remote-debugging-default-user-data)，一个让 AI 代理无缝接管浏览器调试的 Windows 工具\
-  Currently maintaining [Edge-CDP-remote-debugging-default-user-data](https://github.com/flflag/Edge-CDP-remote-debugging-default-user-data), a Windows tool that lets AI agents seamlessly take over browser debugging.
+Starting with Chromium 136 (Chrome and Edge), the browser refuses to open a remote debugging port when using the default user data directory. The error is:
 
+``DevTools remote debugging requires a non-default data directory. Specify this using --user-data-dir.``
 
+This means you cannot use CDP-based tools (AI agents, automation frameworks, debuggers) on your everyday browser profile — the one that already has your logins, bookmarks, extensions, and history.
 
-## 🛠 技术栈 / Tech Stack
+## 💡 How This Tool Solves It
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![Vim](https://img.shields.io/badge/Vim-019733?style=for-the-badge&logo=vim&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+Instead of fighting the restriction, the tool changes what Edge considers its "official" data directory:
 
+1. Renames `User Data` → `My User Data` (renaming preserves file timestamps).
+2. Copies `My User Data` back to `User Data` as a backup snapshot.
+3. Sets the registry policy `HKLM\SOFTWARE\Policies\Microsoft\Edge\UserDataDir` to point at `My User Data`.
 
+Edge now treats `My User Data` as its legitimate data directory. Because it is no longer the default path, the Chromium 136 restriction does not apply, and remote debugging works normally.
 
-## 📫 联系我 / Contact Me
+All your logins, bookmarks, passwords, extensions, history, and cached site data are preserved.
 
-- 📧 邮箱 / Email：flflag@163.com
-- 🐙 GitHub：[@flflag](https://github.com/flflag)
+## 📋 Requirements
 
+- Windows 10 or Windows 11
+- Microsoft Edge installed at the default location
+- Administrator privileges (the script writes to `HKLM`)
 
+## 🚀 Usage
 
-## 💖 支持我 / Support Me
+### Configure
 
-如果你觉得我的开源项目对你有帮助，欢迎在“Ko-fi”或“爱发电”支持我：\
-If you find my open-source projects helpful, feel free to buy me a coffee:
+1. Download the latest release from the [Releases page](../../releases).
+2. Extract the zip.
+3. Double-click the `.bat` file.
+4. Choose option `1` (Configure).
+5. Enter a port, or press Enter to use the default `9222`.
+6. When the UAC prompt appears, click **Yes**.
 
-<a href="https://ko-fi.com/flflag"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="40" alt="Buy Me a Coffee"></a>&nbsp;&nbsp;<a href="https://afdian.com/a/flflag"><img src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png" height="40" alt="爱发电"></a>
+After configuration, two shortcuts named `Edge remote debugging` are created (Desktop and Start Menu).
 
-爱发电：https://afdian.com/a/flflag
+### Daily Use
 
-*感谢你的来访，祝你今天化学方程式配平顺利。*\
-*Thanks for stopping by, and may your chemical equations always balance.*
+| Scenario | Action |
+|---|---|
+| Normal browsing | Launch Edge any way you like. |
+| AI agent takeover | Fully exit Edge (including tray), then double-click `Edge remote debugging`. |
+| Switch back | Fully exit Edge, then launch Edge normally. |
+
+**Why fully exit?** Edge is a single-instance application. If an instance is already running, new command-line flags are forwarded to the existing process and the debugging port will not open.
+
+### Rollback
+
+Run the same `.bat`, choose option `2` (Rollback). This:
+
+1. Closes Edge and related processes.
+2. Lists extensions that disappeared since configuration (informational only).
+3. Deletes the `User Data` backup.
+4. Renames `My User Data` back to `User Data`.
+5. Removes the registry policy and the two shortcuts.
+
+## ⚠️ Important Limitations
+
+- **This is not an official Microsoft tool.** It is a community workaround. Use at your own risk.
+- The rollback process deletes the `User Data` backup snapshot to fully restore the original state. If you want to keep it, copy it elsewhere before rolling back.
+
+## 🔧 How It Works (Technical Details)
+
+Chromium 136 introduced a security check: remote debugging is disabled when the data directory matches the default path. The check uses path normalization, so trailing backslashes, `..` variants, and directory junctions do not bypass it.
+
+The registry policy `UserDataDir` changes Edge's notion of the default directory itself. Once set, Edge uses the specified path unconditionally, ignoring any `--user-data-dir` command-line flag. Because the new path is not the built-in default, the security check passes.
+
+## 📈 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=flflag/edge-cdp-remote-debugging-default-user-data&type=Date)](https://star-history.com/#flflag/edge-cdp-remote-debugging-default-user-data&Date)
+
+## 💖 Support
+
+If this project helps you, feel free to buy me a coffee.
+
+<div align="center">
+
+<a href="https://ko-fi.com/flflag"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" width="170" alt="Buy Me a Coffee"></a>
+
+<a href="https://afdian.com/a/flflag"><img src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png" width="170" alt="爱发电"></a>
+
+<img src="https://raw.githubusercontent.com/flflag/flflag/main/assets/flflag_mm_reward_qrcode.png" alt="WeChat Reward QR Code" width="300">
+
+</div>
+
+## 📄 License
+
+MIT
