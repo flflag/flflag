@@ -3,9 +3,6 @@
 **高中化学教师 / 兼职开发者**
 **High School Chemistry Teacher / Hobbyist Developer**
 
-白天在实验室里教化学，晚上在编辑器里写代码。\
-Teaching chemistry in the lab by day, coding in the editor by night.
-
 我相信好的工具能同时让教学和开发变得更简单。\
 I believe good tools can make both teaching and development simpler.
 
